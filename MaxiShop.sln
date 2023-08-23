@@ -5,7 +5,13 @@ VisualStudioVersion = 17.8.34004.107
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{A06FD479-AAC6-497D-9B81-5A3FE056140A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MaxiShop.Web", "MaxiShop.Web\MaxiShop.Web.csproj", "{83510A24-312C-42C2-B813-2771F40DD7D6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MaxiShop.Web", "MaxiShop.Web\MaxiShop.Web.csproj", "{83510A24-312C-42C2-B813-2771F40DD7D6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MaxiShop.Application", "MaxiShop.Application\MaxiShop.Application.csproj", "{F1A47F5E-736D-4E15-84E9-23DBFDE7659F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MaxiShop.Domain", "MaxiShop.Domain\MaxiShop.Domain.csproj", "{91F93587-A925-4734-A771-D088C4B1B68A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MaxiShop.Infrastructure", "MaxiShop.Infrastructure\MaxiShop.Infrastructure.csproj", "{DBE6C872-2610-43D6-AC86-C7AF3AA68B7A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,12 +23,27 @@ Global
 		{83510A24-312C-42C2-B813-2771F40DD7D6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{83510A24-312C-42C2-B813-2771F40DD7D6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{83510A24-312C-42C2-B813-2771F40DD7D6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F1A47F5E-736D-4E15-84E9-23DBFDE7659F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F1A47F5E-736D-4E15-84E9-23DBFDE7659F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F1A47F5E-736D-4E15-84E9-23DBFDE7659F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F1A47F5E-736D-4E15-84E9-23DBFDE7659F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{91F93587-A925-4734-A771-D088C4B1B68A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{91F93587-A925-4734-A771-D088C4B1B68A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{91F93587-A925-4734-A771-D088C4B1B68A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{91F93587-A925-4734-A771-D088C4B1B68A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DBE6C872-2610-43D6-AC86-C7AF3AA68B7A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DBE6C872-2610-43D6-AC86-C7AF3AA68B7A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DBE6C872-2610-43D6-AC86-C7AF3AA68B7A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DBE6C872-2610-43D6-AC86-C7AF3AA68B7A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{83510A24-312C-42C2-B813-2771F40DD7D6} = {A06FD479-AAC6-497D-9B81-5A3FE056140A}
+		{F1A47F5E-736D-4E15-84E9-23DBFDE7659F} = {A06FD479-AAC6-497D-9B81-5A3FE056140A}
+		{91F93587-A925-4734-A771-D088C4B1B68A} = {A06FD479-AAC6-497D-9B81-5A3FE056140A}
+		{DBE6C872-2610-43D6-AC86-C7AF3AA68B7A} = {A06FD479-AAC6-497D-9B81-5A3FE056140A}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {2F22746B-FF35-47EC-8B1B-2FE8E4DFBF80}

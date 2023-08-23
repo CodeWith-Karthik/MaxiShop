@@ -2,7 +2,7 @@
 
 #nullable disable
 
-namespace MaxiShop.Web.Migrations
+namespace MaxiShop.Infrastructure.Migrations
 {
     /// <inheritdoc />
     public partial class InitialMigration : Migration
