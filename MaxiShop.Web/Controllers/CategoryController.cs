@@ -1,4 +1,6 @@
-﻿using MaxiShop.Application.DTO.Category;
+﻿using MaxiShop.Application.ApplicationConstants;
+using MaxiShop.Application.Common;
+using MaxiShop.Application.DTO.Category;
 using MaxiShop.Application.Services;
 using MaxiShop.Application.Services.Interface;
 using MaxiShop.Domain.Contracts;
@@ -6,6 +8,7 @@ using MaxiShop.Domain.Models;
 using MaxiShop.Infrastructure.DbContexts;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Net;
 
 namespace MaxiShop.Web.Controllers
 {
@@ -14,88 +17,172 @@ namespace MaxiShop.Web.Controllers
     public class CategoryController : ControllerBase
     {
         private readonly ICategoryService _categoryService;
+        protected APIResponse _response;
 
         public CategoryController(ICategoryService categoryService)
         {
             _categoryService = categoryService;
+            _response = new APIResponse();
         }
 
 
         [ProducesResponseType(StatusCodes.Status200OK)]
         [HttpGet]
-        public async Task<ActionResult> Get()
+        public async Task<ActionResult<APIResponse>> Get()
         {
-            var categories = await _categoryService.GetAllAsync();
-            return Ok(categories);
+            try
+            {
+                var categories = await _categoryService.GetAllAsync();
+
+                _response.StatusCode = HttpStatusCode.OK;
+                _response.IsSuccess = true;
+                _response.Result = categories;
+            }
+            catch (Exception)
+            {
+                _response.StatusCode = HttpStatusCode.InternalServerError;
+                _response.AddError(CommonMessage.SystemError);
+            }
+
+            return Ok(_response);
         }
 
         [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
         [HttpGet]
         [Route("Details")]
-        public async Task<ActionResult> Get(int id)
+        public async Task<ActionResult<APIResponse>> Get(int id)
         {
-            var category = await _categoryService.GetByIdAsync(id);
-
-            if(category == null)
+            try
             {
-                return NotFound($"Category not found for Id - {id}");
+                var category = await _categoryService.GetByIdAsync(id);
+
+                if (category == null)
+                {
+                    _response.StatusCode = HttpStatusCode.NotFound;
+                    _response.DisplayMessage = CommonMessage.RecordNotFound;
+                    return Ok(_response);
+                }
+
+                _response.StatusCode = HttpStatusCode.OK;
+                _response.IsSuccess = true;
+                _response.Result = category;
+            }
+            catch (Exception)
+            {
+                _response.StatusCode = HttpStatusCode.InternalServerError;
+                _response.AddError(CommonMessage.SystemError);
             }
 
-            return Ok(category);
+            return Ok(_response);
         }
 
         [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [HttpPost]
-        public async Task<ActionResult> Create([FromBody]CreateCategoryDto dto)
+        public async Task<ActionResult<APIResponse>> Create([FromBody] CreateCategoryDto dto)
         {
-            if (!ModelState.IsValid)
+            try
             {
-                return BadRequest(ModelState);
+                if (!ModelState.IsValid)
+                {
+                    _response.StatusCode = HttpStatusCode.BadRequest;
+                    _response.DisplayMessage = CommonMessage.CreateOperationFailed;
+                    _response.AddError(ModelState.ToString());
+                    return Ok(_response);
+                }
+
+                var entity = await _categoryService.CreateAsync(dto);
+
+                _response.StatusCode = HttpStatusCode.Created;
+                _response.IsSuccess = true;
+                _response.DisplayMessage = CommonMessage.CreateOperationSuccess;
+                _response.Result = entity;
+            }
+            catch (Exception)
+            {
+                _response.StatusCode = HttpStatusCode.InternalServerError;
+                _response.DisplayMessage = CommonMessage.CreateOperationFailed;
+                _response.AddError(CommonMessage.SystemError);
             }
 
-            var entity = await _categoryService.CreateAsync(dto);
-
-            return Ok();
+            return Ok(_response);
         }
 
-        [ProducesResponseType(StatusCodes.Status204NoContent)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         [HttpPut]
-        public async Task<ActionResult> Update([FromBody] UpdateCategoryDto dto)
+        public async Task<ActionResult<APIResponse>> Update([FromBody] UpdateCategoryDto dto)
         {
-            if (!ModelState.IsValid)
+            try
             {
-                return BadRequest(ModelState);
-            }
-            
-            await _categoryService.UpdateAsync(dto);
+                if (!ModelState.IsValid)
+                {
+                    _response.StatusCode = HttpStatusCode.BadRequest;
+                    _response.DisplayMessage = CommonMessage.UpdateOperationFailed;
+                    _response.AddError(ModelState.ToString());
+                    return Ok(_response);
+                }
 
-            return NoContent();
+                var category = await _categoryService.GetByIdAsync(dto.Id);
+
+                if(category == null)
+                {
+                    _response.StatusCode = HttpStatusCode.NotFound;
+                    _response.DisplayMessage = CommonMessage.UpdateOperationFailed;
+                    return Ok(_response);
+                }
+
+                await _categoryService.UpdateAsync(dto);
+
+                _response.StatusCode = HttpStatusCode.NoContent;
+                _response.IsSuccess = true;
+                _response.DisplayMessage = CommonMessage.UpdateOperationSuccess;
+            }
+            catch (Exception)
+            {
+                _response.StatusCode = HttpStatusCode.InternalServerError;
+                _response.DisplayMessage = CommonMessage.UpdateOperationFailed;
+                _response.AddError(CommonMessage.SystemError);
+            }
+
+            return Ok(_response);
         }
 
-        [ProducesResponseType(StatusCodes.Status204NoContent)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         [HttpDelete]
-        public async Task<ActionResult> Delete(int id)
+        public async Task<ActionResult<APIResponse>> Delete(int id)
         {
-            if (id == 0)
+            try
             {
-                return BadRequest();
+                if (id == 0)
+                {
+                    _response.StatusCode = HttpStatusCode.BadRequest;
+                    _response.DisplayMessage = CommonMessage.DeleteOperationFailed;
+                    return Ok(_response);
+                }
+
+                var category = await _categoryService.GetByIdAsync(id);
+
+                if (category == null)
+                {
+                    _response.StatusCode = HttpStatusCode.NotFound;
+                    _response.DisplayMessage = CommonMessage.DeleteOperationFailed;
+                    return Ok(_response);
+                }
+
+                await _categoryService.DeleteAsync(id);
+
+                _response.StatusCode = HttpStatusCode.NoContent;
+                _response.IsSuccess = true;
+                _response.DisplayMessage = CommonMessage.DeleteOperationSuccess;
+            }
+            catch (Exception)
+            {
+
+                _response.StatusCode = HttpStatusCode.InternalServerError;
+                _response.DisplayMessage = CommonMessage.DeleteOperationFailed;
+                _response.AddError(CommonMessage.SystemError);
             }
 
-            var category = await _categoryService.GetByIdAsync(id);
-
-            if (category == null)
-            {
-                return NotFound();
-            }
-
-            await _categoryService.DeleteAsync(id);   
-           
-            return NoContent();
+            return Ok(_response);
         }
     }
 }
