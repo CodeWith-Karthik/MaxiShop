@@ -16,5 +16,7 @@ namespace MaxiShop.Infrastructure.DbContexts
         }
 
         public DbSet<Category> Category { get; set; }
+
+        public DbSet<Brand> Brand { get; set; }
     }
 }
