@@ -13,6 +13,8 @@ namespace MaxiShop.Application.Services.Interface
 
         Task<IEnumerable<ProductDto>> GetAllAsync();
 
+        Task<IEnumerable<ProductDto>> GetAllByFilterAsync(int? categoryId,int? brandId);
+
         Task<ProductDto> CreateAsync(CreateProductDto createProductDto);
 
         Task UpdateAsync(UpdateProductDto updateProductDto);
