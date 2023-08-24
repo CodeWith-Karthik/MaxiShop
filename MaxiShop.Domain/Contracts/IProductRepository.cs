@@ -9,7 +9,7 @@ namespace MaxiShop.Domain.Contracts
 {
     public interface IProductRepository : IGenericRepository<Product>
     {
-        Task<IEnumerable<Product>> GetAllProductAsync();
+        Task<List<Product>> GetAllProductAsync();
 
         Task<Product> GetDetailsAsync(int id);
 
