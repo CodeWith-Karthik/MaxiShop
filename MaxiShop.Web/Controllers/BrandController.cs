@@ -1,6 +1,7 @@
 ﻿using MaxiShop.Application.ApplicationConstants;
 using MaxiShop.Application.Common;
 using MaxiShop.Application.DTO.Brand;
+using MaxiShop.Application.Exceptions;
 using MaxiShop.Application.Services.Interface;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -93,6 +94,15 @@ namespace MaxiShop.Web.Controllers
                 _response.DisplayMessage = CommonMessage.CreateOperationSuccess;
                 _response.Result = entity;
             }
+            catch(BadRequestException ex)
+            {
+                _response.StatusCode = HttpStatusCode.InternalServerError;
+                _response.DisplayMessage = CommonMessage.CreateOperationFailed;
+                _response.AddWarning(ex.Message);
+                _response.AddError(CommonMessage.SystemError);
+                _response.Result = ex.ValidationsErrors;
+            }
+
             catch (Exception)
             {
                 _response.StatusCode = HttpStatusCode.InternalServerError;
