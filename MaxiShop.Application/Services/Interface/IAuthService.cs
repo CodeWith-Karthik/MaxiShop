@@ -11,5 +11,7 @@ namespace MaxiShop.Application.Services.Interface
     public interface IAuthService
     {
         Task<IEnumerable<IdentityError>> Register(Register register);
+
+        Task<object> Login(Login login);
     }
 }

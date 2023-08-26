@@ -14,6 +14,8 @@
     <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="11.7.1" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="8.0.0-preview.7.23375.9" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="8.0.0-preview.7.23375.6" />
+    <PackageReference Include="Microsoft.IdentityModel.Tokens" Version="7.0.0-preview3" />
+    <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="7.0.0-preview3" />
   </ItemGroup>
 
   <ItemGroup>
