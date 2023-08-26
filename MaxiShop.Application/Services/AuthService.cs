@@ -42,7 +42,7 @@ namespace MaxiShop.Application.Services
 
             if(result.Succeeded)
             {
-                await _userManager.AddToRoleAsync(ApplicationUser, "ADMIN");
+                await _userManager.AddToRoleAsync(ApplicationUser, "CUSTOMER");
             }
 
             return result.Errors;

@@ -3,6 +3,7 @@ using MaxiShop.Application.Common;
 using MaxiShop.Application.DTO.Product;
 using MaxiShop.Application.InputModels;
 using MaxiShop.Application.Services.Interface;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
@@ -23,6 +24,7 @@ namespace MaxiShop.Web.Controllers
         }
 
 
+        [Authorize]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [HttpGet]
         public async Task<ActionResult<APIResponse>> Get()
@@ -44,6 +46,7 @@ namespace MaxiShop.Web.Controllers
             return Ok(_response);
         }
 
+        [Authorize(Roles = "ADMIN")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [HttpPost]
         [Route("GetPagination")]
@@ -69,11 +72,11 @@ namespace MaxiShop.Web.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [HttpGet]
         [Route("Filter")]
-        public async Task<ActionResult<APIResponse>> GetFilter(int? categoryId,int? brandId)
+        public async Task<ActionResult<APIResponse>> GetFilter(int? categoryId, int? brandId)
         {
             try
             {
-                var products = await _productService.GetAllByFilterAsync(categoryId,brandId);
+                var products = await _productService.GetAllByFilterAsync(categoryId, brandId);
 
                 _response.StatusCode = HttpStatusCode.OK;
                 _response.IsSuccess = true;
