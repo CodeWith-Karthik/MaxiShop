@@ -4,6 +4,8 @@ using MaxiShop.Infrastructure.DbContexts;
 using Microsoft.EntityFrameworkCore;
 using MaxiShop.Infrastructure.Common;
 using MaxiShop.Web.Middlewares;
+using Microsoft.AspNetCore.Identity;
+using MaxiShop.Application.Common;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -23,6 +25,11 @@ builder.Services.AddCors(options =>
 builder.Services
     .AddDbContext<ApplicationDbContext>(options=> 
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
+{
+
+}).AddEntityFrameworkStores<ApplicationDbContext>();
 
 #endregion
 
@@ -66,6 +73,10 @@ var app = builder.Build();
 app.UseMiddleware<ExceptionMiddleware>();
 
 UpdateDatabaseAsync(app);
+
+var serviceProvider = app.Services;
+
+await SeedData.SeedRoles(serviceProvider);
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
