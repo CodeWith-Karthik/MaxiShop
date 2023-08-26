@@ -11,11 +11,12 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
 
-namespace MaxiShop.Web.Controllers
+namespace MaxiShop.Web.Controllers.v1
 {
     [Authorize]
-    [Route("api/[controller]")]
+    [Route("api/v{version:apiVersion}/[controller]")]
     [ApiController]
+    [ApiVersion("1.0")]
     public class CategoryController : ControllerBase
     {
         private readonly ICategoryService _categoryService;
@@ -125,7 +126,7 @@ namespace MaxiShop.Web.Controllers
 
                 var category = await _categoryService.GetByIdAsync(dto.Id);
 
-                if(category == null)
+                if (category == null)
                 {
                     _response.StatusCode = HttpStatusCode.NotFound;
                     _response.DisplayMessage = CommonMessage.UpdateOperationFailed;
