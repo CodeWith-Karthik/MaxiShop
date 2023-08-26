@@ -24,6 +24,7 @@ namespace MaxiShop.Web.Controllers
 
 
         [ProducesResponseType(StatusCodes.Status200OK)]
+        [ResponseCache(CacheProfileName = "Default")]
         [HttpGet]
         public async Task<ActionResult<APIResponse>> Get()
         {
@@ -45,6 +46,7 @@ namespace MaxiShop.Web.Controllers
         }
 
         [ProducesResponseType(StatusCodes.Status200OK)]
+        [ResponseCache(CacheProfileName = "Default")]
         [HttpGet]
         [Route("Details")]
         public async Task<ActionResult<APIResponse>> Get(int id)
