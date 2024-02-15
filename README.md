@@ -2,6 +2,7 @@
 [![.NET Core 8](https://img.shields.io/badge/.NET%20Core-8-blue)](https://dotnet.microsoft.com/download/dotnet/8.0)
 
 > [!TIP]
+[Demo Video Tutorial in Tamil](https://youtu.be/w8l0BCsuEyY?si=AEOJUvS3zF84TINo) |
 [Full Video Tutorial in Tamil](https://www.udemy.com/course/ultimate-guide-to-net8-core-web-api-with-ef-core/)
 
 ## Course content
